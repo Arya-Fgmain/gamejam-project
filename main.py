@@ -21,14 +21,25 @@ create a font --> (font type = could be files or None, font size in px)
 test_font = pygame.font.Font('font/Pixeltype.ttf', 50)
 
 ''' SURFACES '''
-sky_surface = pygame.image.load('graphics/Sky.png')                     # loading an image using a relative path
-ground_surface = pygame.image.load('graphics/ground.png') 
+sky_surface = pygame.image.load('graphics/Sky.png').convert()           # loading an image using a relative path
+ground_surface = pygame.image.load('graphics/ground.png').convert()     # convert() converts images to a format that's more convenient for pygame
 
 '''
 renders a font based on the created font object instance
 (text, Anti-Aliasing: use font edges/not (for pixelated font) with True/False, color)
 '''
 text_surface = test_font.render('My Game', False, 'Black')
+
+snail_surface = pygame.image.load('graphics/snail/snail1.png').convert_alpha()  # convert_alpha converts without the background graphics = alpha values of the snake so that it looks right on the screen
+snail_x_pos = 600
+
+player_surf = pygame.image.load('graphics/player/player_walk_1.png').convert_alpha()
+'''
+pygame.Rec(left, top, width, height)
+or create a rectangle with the exact same size as the surface using get_rect()
+'''
+player_rect = player_surf.get_rect(midbottom = (80,300))
+
 
 while True:
     for event in pygame.event.get():        # gets all events from Pygame
@@ -45,7 +56,15 @@ while True:
     screen.blit(sky_surface, (0,0))             
     screen.blit(ground_surface, (0,300))
     screen.blit(text_surface, (300, 50))
-
+    snail_x_pos -= 4
+    if snail_x_pos < -100: snail_x_pos = 800    # prevent snail from getting lost outside of the display surface
+    screen.blit(snail_surface, (snail_x_pos, 250))
+    screen.blit(player_surf, player_rect)       # blit(surface, rectangle) if we've instantiated a rectangle
+    
+    '''
+    important: the blit method keeps adding these images to the display surface for every new frame
+    so if we just run the code without the sky and ground/text, we see the snail leaves a trail because that's the previously-drawn snail surfaces
+    '''
     
     pygame.display.update()                 # updates display surface & puts changes (draws them) on display surface
                                             
