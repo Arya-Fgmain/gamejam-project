@@ -30,8 +30,10 @@ renders a font based on the created font object instance
 '''
 text_surface = test_font.render('My Game', False, 'Black')
 
-snail_surface = pygame.image.load('graphics/snail/snail1.png').convert_alpha()  # convert_alpha converts without the background graphics = alpha values of the snake so that it looks right on the screen
-snail_x_pos = 600
+snail_surf = pygame.image.load('graphics/snail/snail1.png').convert_alpha()  # convert_alpha converts without the background graphics = alpha values of the snake so that it looks right on the screen
+
+snail_rect = snail_surf.get_rect(bottomright = (600, 300))
+
 
 player_surf = pygame.image.load('graphics/player/player_walk_1.png').convert_alpha()
 '''
@@ -56,9 +58,14 @@ while True:
     screen.blit(sky_surface, (0,0))             
     screen.blit(ground_surface, (0,300))
     screen.blit(text_surface, (300, 50))
-    snail_x_pos -= 4
-    if snail_x_pos < -100: snail_x_pos = 800    # prevent snail from getting lost outside of the display surface
-    screen.blit(snail_surface, (snail_x_pos, 250))
+    #if snail_x_pos < -100: snail_x_pos = 800   # prevent snail from getting lost outside of the display surface
+    snail_rect.x -= 4                           # can move based on coordinates
+    if snail_rect.right <= 0:   snail_rect.left = 800
+    screen.blit(snail_surf, snail_rect)
+    snail_rect.left -= 1
+
+    # player_rect.left += 1                       # moving the rectangle
+    # print(player_rect.left)                     # printing info
     screen.blit(player_surf, player_rect)       # blit(surface, rectangle) if we've instantiated a rectangle
     
     '''
@@ -66,6 +73,9 @@ while True:
     so if we just run the code without the sky and ground/text, we see the snail leaves a trail because that's the previously-drawn snail surfaces
     '''
     
+    if player_rect.colliderect(snail_rect):         # returns 0/1 but python translates it automatically
+        print('collision!')                         # note collision happens in every frame where the rectangles overlap
+
     pygame.display.update()                 # updates display surface & puts changes (draws them) on display surface
                                             
     clock.tick(60)                          # loop doesn't run faster than 60 miliseconds
