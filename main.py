@@ -28,7 +28,8 @@ ground_surface = pygame.image.load('graphics/ground.png').convert()     # conver
 renders a font based on the created font object instance
 (text, Anti-Aliasing: use font edges/not (for pixelated font) with True/False, color)
 '''
-text_surface = test_font.render('My Game', False, 'Black')
+score_surf = test_font.render('My Game', False, 'Black')
+score_rect = score_surf.get_rect(center = (400, 50))
 
 snail_surf = pygame.image.load('graphics/snail/snail1.png').convert_alpha()  # convert_alpha converts without the background graphics = alpha values of the snake so that it looks right on the screen
 
@@ -48,11 +49,7 @@ while True:
         if event.type == pygame.QUIT:       # if user wants to exit
             pygame.quit()                   # opposite of pygame.init() --> uninitializes everything
             exit()                          # (from sys) closes all processes that are running
-        # if event.type == pygame.MOUSEMOTION:    # or MOUSEBUTTONDOWN or MOUSEBUTTONUP
-        #     print(event.pos)                # prints position of the mouse wrt the grid
-        # if event.type == pygame.MOUSEMOTION and player_rect.collidepoint(event.pos):
-        #     # other way to check if the mouse is over the player rectangle
-        #     print('mouse in player rectangle')
+
     '''
     blit = block image transfer = blocking display surface transfer to put this on top
     (surface, position - (x,y))
@@ -61,10 +58,17 @@ while True:
     '''
     screen.blit(sky_surface, (0,0))             
     screen.blit(ground_surface, (0,300))
-    screen.blit(text_surface, (300, 50))
-    #if snail_x_pos < -100: snail_x_pos = 800   # prevent snail from getting lost outside of the display surface
+    '''
+    pygame.draw.rect(display surface, color, target rectangle)
+    additional 4th argument: width --> empties the fill and just maintains a border
+    ...5th                 : border radius (which rounds border)
+    '''
+    pygame.draw.rect(screen, 'Pink', score_rect, 6)
+    pygame.draw.rect(screen, 'Pink', score_rect)
+    screen.blit(score_surf, score_rect)
+
     snail_rect.x -= 4                           # can move based on coordinates
-    if snail_rect.right <= 0:   snail_rect.left = 800
+    if snail_rect.right <= 0:   snail_rect.left = 800   # bring snail back inside the display surface if it went outside the dimensions
     screen.blit(snail_surf, snail_rect)
     snail_rect.left -= 1
 
