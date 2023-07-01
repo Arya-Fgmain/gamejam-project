@@ -48,7 +48,11 @@ while True:
         if event.type == pygame.QUIT:       # if user wants to exit
             pygame.quit()                   # opposite of pygame.init() --> uninitializes everything
             exit()                          # (from sys) closes all processes that are running
-
+        # if event.type == pygame.MOUSEMOTION:    # or MOUSEBUTTONDOWN or MOUSEBUTTONUP
+        #     print(event.pos)                # prints position of the mouse wrt the grid
+        # if event.type == pygame.MOUSEMOTION and player_rect.collidepoint(event.pos):
+        #     # other way to check if the mouse is over the player rectangle
+        #     print('mouse in player rectangle')
     '''
     blit = block image transfer = blocking display surface transfer to put this on top
     (surface, position - (x,y))
@@ -73,8 +77,12 @@ while True:
     so if we just run the code without the sky and ground/text, we see the snail leaves a trail because that's the previously-drawn snail surfaces
     '''
     
-    if player_rect.colliderect(snail_rect):         # returns 0/1 but python translates it automatically
-        print('collision!')                         # note collision happens in every frame where the rectangles overlap
+    # if player_rect.colliderect(snail_rect):         # returns 0/1 but python translates it automatically
+    #     print('collision!')                         # note collision happens in every frame where the rectangles overlap
+
+    # mouse_pos = pygame.mouse.get_pos()                # gets mouse coordinates from pygame.mouse
+    # if player_rect.collidepoint(mouse_pos):           # is mouse in the player rectangle?
+    #     print(pygame.mouse.get_pressed())             # returns a tuple dictating whether (left, middle, right) mouse buttons are currently pressed or not
 
     pygame.display.update()                 # updates display surface & puts changes (draws them) on display surface
                                             
