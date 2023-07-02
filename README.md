@@ -19,6 +19,9 @@ The theme of the game jam was 'Peak,' and this is how it was implemented in this
 # Implementation
 The game is all written in Python v3.9.13, and is implemented by the Pygame Module.
 
+# Inspiration
+Inspiration for this game came from Clear Code's fantastic 'The ultimate introduction to Pygame' video. <a href="https://www.youtube.com/watch?v=AY9MnQ4x3zk&list=LL&index=4">Check it out.</a> My work following the video can be found in the 'tutorial,' and run similarly to the game.py file here. 
+
 # Try it out!
 <ol>
     <li>Make sure you have Python installed on your system</li>
