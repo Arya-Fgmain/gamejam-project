@@ -1,7 +1,7 @@
 import pygame
 from sys import exit
 
-def display_score(): # use pygame.time.get_ticks() to get miliseconds passed since start of program
+def time_elapsed(): # use pygame.time.get_ticks() to get miliseconds passed since start of program
     # integer division by 1000 since we don't want miliseconds
     # global current_time
     current_time = (pygame.time.get_ticks() - start_time) // 1000
@@ -21,9 +21,16 @@ clock = pygame.time.Clock()
 # for deciding between game/game-over page
 game_active = False
 
+# is the character 'peaking' their performance
+transformed = False
+
+# speed of enemy / player
+speed = 7
+
 # time the player survived
 survival_time = 0
 start_time = 0
+peak_time = 0
 
 # game title & death text
 font = pygame.font.Font(None, 100)
@@ -44,6 +51,7 @@ level_rect = level_surface.get_rect(midbottom = (450, 400))
 
 player_surface = pygame.image.load('gpics/player.png').convert_alpha()
 player_rect = player_surface.get_rect(midbottom = (150, 300))
+
 # player's gravity --> increases slowly
 player_gravity = 1
 
@@ -62,16 +70,33 @@ while True:
         if event.type == pygame.QUIT:
             pygame.quit()
             exit()
-        
+
         if game_active:
             # checking if either the character was clicked on or the space key was pressed via the event loop to jump
             if player_rect.bottom >= 300 and ( (event.type == pygame.MOUSEBUTTONDOWN and player_rect.collidepoint(event.pos)) or (event.type == pygame.KEYDOWN and event.key == pygame.K_SPACE) ):
                 player_gravity = -20
+            if event.type == pygame.KEYDOWN and event.key == pygame.K_0:
+                if transformed:
+                    # recreate surface and rect to properly place the surface on the LEVEL
+                    # --> rotation casues leveling issues
+                    player_surface = pygame.image.load('gpics/player.png').convert_alpha()
+                    player_rect = player_surface.get_rect(midbottom = (150, 300))
+                    speed = 7
+                    transformed = False
+                else:
+                    # recreate surface and rect to properly place the surface on the LEVEL
+                    # --> rotation casues leveling issues
+                    player_surface = pygame.transform.rotozoom(player_surface, 45, 1)
+                    player_rect = player_surface.get_rect(midbottom = (150, 300))
+                    speed = 10
+                    transformed = True
         elif event.type == pygame.KEYDOWN and event.key == pygame.K_SPACE:
             # reset the game if user presses SPACE in death screen
             game_active = True
             enemy_rect.x = 600
             start_time = pygame.time.get_ticks()
+        
+                
             
     if game_active:
         # drawing the setting & text on the screen
@@ -82,7 +107,9 @@ while True:
         screen.blit(level_surface, level_rect)
 
         
-        survival_time = display_score()
+        survival_time = time_elapsed()
+        if (survival_time > peak_time):
+            peak_time = survival_time
         
 
         # applying gravity and making sure player doesn't go under the level
@@ -92,7 +119,7 @@ while True:
             player_rect.bottom = 300
         screen.blit(player_surface, player_rect)
         
-        enemy_rect.x -= 7
+        enemy_rect.x -= speed
         if enemy_rect.x <= -130:
             enemy_rect.x = 900
         screen.blit(enemy_surface, enemy_rect)
@@ -115,15 +142,21 @@ while True:
 
             screen.blit(temp_content_surf, temp_content_rect)
             screen.blit(death_text_surf, death_text_rect)
+
+            
     else:
         screen.fill('#4a4747')
         screen.blit(game_name, game_name_rect)
         screen.blit(game_msg, game_msg_rect)
-        time_surf = small_font.render(f'time passed: {survival_time}', False, 'Red')
-        time_rect = time_surf.get_rect(midtop = (450, 200))
 
-        if survival_time == 0: screen.blit(game_msg, game_msg_rect)
-        else: screen.blit(time_surf, time_rect)
+        peak_surf = small_font.render(f'peak time: {peak_time} sec', False, 'Red')
+        peak_rect = peak_surf.get_rect(midtop = (450, 260))      
+        screen.blit(peak_surf, peak_rect)
+        time_surf = small_font.render(f'time passed: {survival_time} sec', False, 'Red')
+        time_rect = time_surf.get_rect(midtop = (450, 200))
+        screen.blit(time_surf, time_rect) 
+            
+            
         
 
     # updating the canvas with the newly applied changes at a rate of 1/60th of a second
