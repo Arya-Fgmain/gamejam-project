@@ -13,7 +13,7 @@ pygame.init()
 
 # default surface for the game
 screen = pygame.display.set_mode((900, 400))
-pygame.display.set_caption('My Game')
+pygame.display.set_caption('Peak Rider')
 
 # clock to manage the game's frame rate in the event loop
 clock = pygame.time.Clock()
@@ -35,19 +35,21 @@ peak_time = 0
 # game title & death text
 font = pygame.font.Font(None, 100)
 small_font = pygame.font.Font(None, 50)
-text_surface = font.render('Hell!', True, 'Red')
+text_surface = small_font.render("Earth's Core", True, 'Red')
 text_rect = text_surface.get_rect(center = (450, 50))
 
 death_text_surf = pygame.font.Font(None, 36).render('To replay press [SPACE]', False, 'Black')
 death_text_rect = death_text_surf.get_rect(midtop = (450, 370))
 
 '''REGULAR SURFACES'''
-sky_surface = pygame.image.load('gpics/background.png')
+sky_surface = pygame.image.load('gpics/background.png').convert()
 sky_rect = sky_surface.get_rect(topleft = (0, 0))
 
-level_surface = pygame.Surface((900, 100))
-level_surface.fill('Grey')
-level_rect = level_surface.get_rect(midbottom = (450, 400))
+# level_surface = pygame.Surface((900, 100))
+# level_surface.fill('Grey')
+level_surface = pygame.image.load('gpics/level.png').convert()
+leve_surface = pygame.transform.scale(level_surface, (1500, 150))
+level_rect = level_surface.get_rect(midtop = (450, 300))
 
 player_surface = pygame.image.load('gpics/player.png').convert_alpha()
 player_rect = player_surface.get_rect(midbottom = (150, 300))
@@ -55,15 +57,20 @@ player_rect = player_surface.get_rect(midbottom = (150, 300))
 # player's gravity --> increases slowly
 player_gravity = 1
 
-enemy_surface = pygame.image.load('gpics/enemy_resized.png').convert_alpha()
+enemy_surface = pygame.image.load('gpics/enemy.png').convert_alpha()
+enemy_surface = pygame.transform.scale(enemy_surface, (110, 90))
 enemy_rect = enemy_surface.get_rect(midbottom = (600, 320))
 
-# beginning page content
-game_name = font.render('Welcome to the game!', False, 'Red')
+# intro page content
+backg_surf = pygame.image.load('gpics/intro_background.png').convert()
+backg_surf = pygame.transform.scale(backg_surf, (900, 400))
+backg_rect = backg_surf.get_rect()   
+
+game_name = font.render('Peak Rider', False, 'Red')
 game_name_rect = game_name.get_rect(midtop = (450, 30))
 
-game_msg = font.render('Press space to begin', False, 'Red')
-game_msg_rect = game_msg.get_rect(midtop = (450, 290))
+game_msg = small_font.render('press space to begin', False, 'Red')
+game_msg_rect = game_msg.get_rect(midtop = (450, 350))
 
 while True:
     for event in pygame.event.get():
@@ -106,9 +113,9 @@ while True:
         screen.blit(text_surface, text_rect)
         screen.blit(level_surface, level_rect)
 
-        
+        # update survival time to reflect new games played & check for peak riding time
         survival_time = time_elapsed()
-        if (survival_time > peak_time):
+        if (survival_time > peak_time): 
             peak_time = survival_time
         
 
@@ -119,6 +126,7 @@ while True:
             player_rect.bottom = 300
         screen.blit(player_surface, player_rect)
         
+        # moving the enemy rectangle
         enemy_rect.x -= speed
         if enemy_rect.x <= -130:
             enemy_rect.x = 900
@@ -145,10 +153,12 @@ while True:
 
             
     else:
-        screen.fill('#4a4747')
+        # intro / game over screen
+        # screen.fill('#4a4747')
+        screen.fill('#000000')
+        # screen.blit(backg_surf, backg_rect)
         screen.blit(game_name, game_name_rect)
         screen.blit(game_msg, game_msg_rect)
-
         peak_surf = small_font.render(f'peak time: {peak_time} sec', False, 'Red')
         peak_rect = peak_surf.get_rect(midtop = (450, 260))      
         screen.blit(peak_surf, peak_rect)
