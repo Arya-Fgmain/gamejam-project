@@ -32,13 +32,13 @@ while True:
             exit()
     
     screen.blit(sky_surface, sky_rect)
-    pygame.draw.rect(screen, 'Black', text_rect, 10)
+    pygame.draw.rect(screen, 'Orange', text_rect, 10)
     pygame.draw.rect(screen, 'Black', text_rect)
     screen.blit(text_surface, text_rect)
     screen.blit(level_surface, level_rect)
 
-    if player_rect.colliderect(enemy_rect):
-        exit()
+    # if player_rect.colliderect(enemy_rect):
+    #     exit()
 
     if player_rect.left > 900:
         player_rect.left = 0
