@@ -1,6 +1,6 @@
 
 
-<img src="gpics/p.png" height=20% width=40% alt="character art" />
+<img src="gpics/character.png" height=20% width=40% alt="character art" />
 
 # A little about this game
 I made this game for the Mountaintop Game Jam organised by SFU's Game Development Club & Computing Science Student Society in July 2023.
