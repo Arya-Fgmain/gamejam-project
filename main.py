@@ -63,8 +63,10 @@ while True:
     additional 4th argument: width --> empties the fill and just maintains a border
     ...5th                 : border radius (which rounds border)
     '''
-    pygame.draw.rect(screen, 'Pink', score_rect, 6)
     pygame.draw.rect(screen, 'Pink', score_rect)
+    pygame.draw.rect(screen, 'Pink', score_rect, 10)
+    # pygame.draw.line(screen, 'Gold', (0,0), pygame.mouse.get_pos(), 10)
+    # pygame.draw.ellipse(screen, 'Brown', pygame.Rect(50, 200, 100, 100))
     screen.blit(score_surf, score_rect)
 
     snail_rect.x -= 4                           # can move based on coordinates
