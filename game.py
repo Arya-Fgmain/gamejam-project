@@ -1,8 +1,14 @@
 import pygame
 from sys import exit
 
-'''PRELIMINARIES'''
+def display_score(): # use pygame.time.get_ticks() to get miliseconds passed since start of program
+    # integer division by 1000 since we don't want miliseconds
+    # global current_time
+    current_time = (pygame.time.get_ticks() - start_time) // 1000
+    # or int((pygame.time.... - start_time) / 1000)
+    return current_time
 
+'''PRELIMINARIES'''
 pygame.init()
 
 # default surface for the game
@@ -13,10 +19,15 @@ pygame.display.set_caption('My Game')
 clock = pygame.time.Clock()
 
 # for deciding between game/game-over page
-game_active = True
+game_active = False
+
+# time the player survived
+survival_time = 0
+start_time = 0
 
 # game title & death text
 font = pygame.font.Font(None, 100)
+small_font = pygame.font.Font(None, 50)
 text_surface = font.render('Hell!', True, 'Red')
 text_rect = text_surface.get_rect(center = (450, 50))
 
@@ -39,6 +50,13 @@ player_gravity = 1
 enemy_surface = pygame.image.load('gpics/enemy_resized.png').convert_alpha()
 enemy_rect = enemy_surface.get_rect(midbottom = (600, 320))
 
+# beginning page content
+game_name = font.render('Welcome to the game!', False, 'Red')
+game_name_rect = game_name.get_rect(midtop = (450, 30))
+
+game_msg = font.render('Press space to begin', False, 'Red')
+game_msg_rect = game_msg.get_rect(midtop = (450, 290))
+
 while True:
     for event in pygame.event.get():
         if event.type == pygame.QUIT:
@@ -53,6 +71,7 @@ while True:
             # reset the game if user presses SPACE in death screen
             game_active = True
             enemy_rect.x = 600
+            start_time = pygame.time.get_ticks()
             
     if game_active:
         # drawing the setting & text on the screen
@@ -61,6 +80,10 @@ while True:
         pygame.draw.rect(screen, '#ffbf00', text_rect)
         screen.blit(text_surface, text_rect)
         screen.blit(level_surface, level_rect)
+
+        
+        survival_time = display_score()
+        
 
         # applying gravity and making sure player doesn't go under the level
         player_gravity += 1
@@ -92,8 +115,15 @@ while True:
 
             screen.blit(temp_content_surf, temp_content_rect)
             screen.blit(death_text_surf, death_text_rect)
+    else:
+        screen.fill('#4a4747')
+        screen.blit(game_name, game_name_rect)
+        screen.blit(game_msg, game_msg_rect)
+        time_surf = small_font.render(f'time passed: {survival_time}', False, 'Red')
+        time_rect = time_surf.get_rect(midtop = (450, 200))
 
-            
+        if survival_time == 0: screen.blit(game_msg, game_msg_rect)
+        else: screen.blit(time_surf, time_rect)
         
 
     # updating the canvas with the newly applied changes at a rate of 1/60th of a second
