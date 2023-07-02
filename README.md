@@ -1,3 +1,7 @@
+
+![character](https://github.com/Arya-Fgmain/gamejam-project/assets/97604329/90a528b9-d84a-46c9-89aa-8a62a0b42cdf)
+
+
 # A little about this game
 I made this game for the Mountaintop Game Jam organised by SFU's Game Development Club & Computing Science Student Society in July 2023.
 
