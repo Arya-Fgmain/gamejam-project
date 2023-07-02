@@ -4,7 +4,7 @@ I made this game for the Mountaintop Game Jam organised by SFU's Game Dev Club &
 
 
 # The Lore
-A mysterious biker, obsessed with achieving *the peak* in his every endeavour, sets out to <strong>the Earth's core</strong> to challenge a fearful opponent. This opponent, we shall call him <strong>Egod</strong>, was banished to the Earth's core years ago for his unmatched combat skills. If the rider defeats Egod, all will be good. But there is always a chance, a <div style="text-decoration: underline">0.000001%</div> chance that Egod prevails. If that happens then the fate of humanity is sealed, and earth will be conquered by Egod and his evil thirst for power will shine a gloomy shadow on the earth, FOREVER! Please win no pressure haha.
+A mysterious biker, obsessed with achieving *the peak* in his every endeavour, sets out to <strong>the Earth's core</strong> to challenge a fearful opponent. This opponent, we shall call him <strong>Egod</strong>, was banished to the Earth's core years ago for his unmatched combat skills. If the rider defeats Egod, all will be good. But there is always a chance, a <div style="text-decoration: underline; display: inline">0.000001%</div> chance that Egod prevails. If that happens then the fate of humanity is sealed, and earth will be conquered by Egod and his evil thirst for power will shine a gloomy shadow on the earth, FOREVER! Please win no pressure haha.
 
 # Game Jam Theme & Correlations
 The theme of the game jam was 'Peak,' and this is how it was implemented in this game:
