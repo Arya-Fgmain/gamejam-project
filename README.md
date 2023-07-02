@@ -1,6 +1,7 @@
 # A little about this game ... it's all about *the peak*
 I made this game for the Mountaintop Game Jam organised by SFU's Game Dev Club & Computing Science Student Society.
-<img width="1017" alt="gamejamlogo" src="https://github.com/Arya-Fgmain/gamejam-project/assets/97604329/796c9489-87f1-43fd-98cd-340f8379c1ed">
+<img width="1012" alt="Screenshot 2023-07-02 at 8 26 07 AM" src="https://github.com/Arya-Fgmain/gamejam-project/assets/97604329/816b4d33-dccf-47a6-9e4a-12efd293a51d">
+
 
 
 # The Lore
