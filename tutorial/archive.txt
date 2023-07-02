@@ -71,6 +71,9 @@ while True:
 
     snail_rect.x -= 4                           # can move based on coordinates
     if snail_rect.right <= 0:   snail_rect.left = 800   # bring snail back inside the display surface if it went outside the dimensions
+    This is some of the code with comments which I used to learn the concepts
+    
+    
     screen.blit(snail_surf, snail_rect)
     snail_rect.left -= 1
 

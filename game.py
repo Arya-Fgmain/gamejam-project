@@ -46,8 +46,6 @@ sky_surface = pygame.image.load('gpics/background.png').convert()
 sky_surface = pygame.transform.scale(sky_surface, (900, 300))
 sky_rect = sky_surface.get_rect(topleft = (0, 0))
 
-# level_surface = pygame.Surface((900, 100))
-# level_surface.fill('Grey')
 level_surface = pygame.image.load('gpics/level.png').convert()
 leve_surface = pygame.transform.scale(level_surface, (1500, 150))
 level_rect = level_surface.get_rect(midtop = (450, 300))
@@ -141,23 +139,18 @@ while True:
             temp_surface.fill('White')
             temp_rect = temp_surface.get_rect(topleft = (0,0))
             screen.blit(temp_surface, temp_rect)
-
-            temp_content_surf = pygame.image.load('gpics/death.png').convert_alpha()
-            temp_content_rect = temp_content_surf.get_rect(center = (450, 200))
             
             
             pygame.draw.rect(screen, '#dfdfdf', death_text_rect)
             pygame.draw.rect(screen, 'Red', death_text_rect, 2)
 
-            screen.blit(temp_content_surf, temp_content_rect)
+            
             screen.blit(death_text_surf, death_text_rect)
 
             
     else:
         # intro / game over screen
-        # screen.fill('#4a4747')
         screen.fill('#000000')
-        # screen.blit(backg_surf, backg_rect)
         screen.blit(game_name, game_name_rect)
         screen.blit(game_msg, game_msg_rect)
         peak_surf = small_font.render(f'peak time: {peak_time} sec', False, 'Red')
