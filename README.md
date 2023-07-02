@@ -17,12 +17,12 @@ The theme of the game jam was 'Peak,' and this is how it was implemented in this
 </ul>
 
 # Implementation
-The game was implemented using the Pygame Module, and is all written in Python v3.9.13.
+The game is all written in Python v3.9.13, and is implemented by the Pygame Module.
 
 # Try it out!
 <ol>
     <li>Make sure you have Python installed on your system</li>
-    <li>Clone this repository</li>
+    <li>Download / clone this repository</li>
     <li>Install Pygame by typing 'pip install pygame' in your Terminal of choice</li>
     <li>Run the command 'python3 game.py,' enjoy!</li>
 </ol>

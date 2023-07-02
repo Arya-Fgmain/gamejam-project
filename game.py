@@ -43,6 +43,7 @@ death_text_rect = death_text_surf.get_rect(midtop = (450, 370))
 
 '''REGULAR SURFACES'''
 sky_surface = pygame.image.load('gpics/background.png').convert()
+sky_surface = pygame.transform.scale(sky_surface, (900, 300))
 sky_rect = sky_surface.get_rect(topleft = (0, 0))
 
 # level_surface = pygame.Surface((900, 100))
