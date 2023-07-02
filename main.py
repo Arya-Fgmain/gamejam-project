@@ -7,6 +7,7 @@ pygame.display.set_caption('paigaim')
 clock = pygame.time.Clock()                                             
 
 test_font = pygame.font.Font('font/Pixeltype.ttf', 50)
+game_active = True
 
 ''' SURFACES '''
 sky_surface = pygame.image.load('graphics/Sky.png').convert()           
@@ -30,35 +31,47 @@ while True:
             exit()   
         # event loop checking for mouse & keyboard input  
         # note: checking for mousemotion is more efficient than checking for a collision   
-        if event.type == pygame.MOUSEBUTTONDOWN:
-            if player_rect.collidepoint(event.pos): # note: using and might make it more difficult for the input to register for some reason
-                player_gravity = -20
-        if event.type == pygame.KEYDOWN:
-            if event.key == pygame.K_SPACE:
-                player_gravity = -20           
+        if game_active:
+            if event.type == pygame.MOUSEBUTTONDOWN:
+                # only jumping if the player is on/below the ground
+                if player_rect.collidepoint(event.pos) and player_rect.bottom >= 300: # note: using and might make it more difficult for the input to register for some reason
+                    player_gravity = -20
+            if event.type == pygame.KEYDOWN:
+                if event.key == pygame.K_SPACE and player_rect.bottom >= 300: 
+                    player_gravity = -20
+        else:
+            if event.type == pygame.KEYDOWN and event.key == pygame.K_SPACE:
+                game_active = True      
+                # above not enough to work because we have to keep spacing until the player and enemy do not collide
+                snail_rect.left = 800     
+    '''GAME'''
+    if game_active:
+        # drawing sky & ground
+        screen.blit(sky_surface, (0,0))             
+        screen.blit(ground_surface, (0,300))
+        
+        # drawing outline for score text
+        pygame.draw.rect(screen, '#c0e8ec', score_rect)
+        pygame.draw.rect(screen, '#c0e8ec', score_rect, 10)
+        screen.blit(score_surf, score_rect)
 
-    # drawing sky & ground
-    screen.blit(sky_surface, (0,0))             
-    screen.blit(ground_surface, (0,300))
-    
-    # drawing outline for score text
-    pygame.draw.rect(screen, '#c0e8ec', score_rect)
-    pygame.draw.rect(screen, '#c0e8ec', score_rect, 10)
-    screen.blit(score_surf, score_rect)
+        # managing the snail's movements
+        snail_rect.x -= 4                      # x, y coordinates of rectangles can be accessed                 
+        if snail_rect.right <= 0:   snail_rect.left = 800   
+        screen.blit(snail_surf, snail_rect)
 
-    # managing the snail's movements
-    snail_rect.x -= 4                      # x, y coordinates of rectangles can be accessed                 
-    if snail_rect.right <= 0:   snail_rect.left = 800   
-    screen.blit(snail_surf, snail_rect)
+        # Player
+        player_gravity += 1
+        player_rect.y += player_gravity
+        if player_rect.bottom >= 300:
+            player_rect.bottom = 300
+        screen.blit(player_surf, player_rect)
+        
+        # collision 
+        if snail_rect.colliderect(player_rect):
+            screen.fill('Yellow')
+            game_active = False
+            
 
-    # Player
-    player_gravity += 1
-    player_rect.y += player_gravity
-    screen.blit(player_surf, player_rect)
-
-    # keys = pygame.key.get_pressed()       # shows info about all buttons and their state
-    # if keys[pygame.K_SPACE]:              # if space is pressed
-    #     print('jump')
-    
     pygame.display.update()                                                         
     clock.tick(60)                          

@@ -29,6 +29,7 @@ enemy_rect = enemy_surface.get_rect(midbottom = (450, 320))
 while True:
     for event in pygame.event.get():
         if event.type == pygame.QUIT:
+            pygame.quit()
             exit()
     
     screen.blit(sky_surface, sky_rect)
